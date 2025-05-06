@@ -8,7 +8,10 @@ public class TraversalPractice {
    * @param node The root of the tree to print
    */
   public static void printOddNodes(Node<Integer> node) {
-
+    if (node == null) return;
+    printOddNodes(node.left);
+    printOddNodes(node.right);
+    if (node.value % 2 == 1) System.out.println(node.value);
   }
 
   /**
@@ -20,7 +23,11 @@ public class TraversalPractice {
    * @param node The root of the tree to print
    */
   public static <T> void printNodesWithOneChild(Node<T> node) {
-    
+    if (node == null) return;
+    if (node.left == null && node.right != null) System.out.println(node.value);
+    if (node.right == null && node.left != null) System.out.println(node.value);
+    printNodesWithOneChild(node.left);
+    printNodesWithOneChild(node.right);
   }
 
     /**
@@ -32,7 +39,8 @@ public class TraversalPractice {
    * @return the sum 
    */
   public static int treeSum(Node<Integer> node) {
-    return 0;
+    if (node == null) return 0;
+    return node.value + treeSum(node.left) + treeSum(node.right);
   }
 
   /**
@@ -45,7 +53,13 @@ public class TraversalPractice {
    * @return the max value
    */
   public static int maxVal(Node<Integer> node) {
-    return 0;
+    if (node == null) return 0;
+    int currentMax = node.value;
+    int left = maxVal(node.left);
+    int right = maxVal(node.right);
+    if (left > currentMax) currentMax = left;
+    if (right > currentMax) currentMax = right;
+    return currentMax;
   }
 
   /**
@@ -58,7 +72,11 @@ public class TraversalPractice {
    * @return The number of levels in the tree
    */
   public static <T> int numLevels(Node<T> node) {
-    return 0;
+    if (node == null) return 0;
+    int left = 1 + numLevels(node.left);
+    int right = 1 + numLevels(node.right);
+    if (left > right) return left;
+    else return right;
   }
 
   public static void main(String[] args) {
@@ -72,7 +90,18 @@ public class TraversalPractice {
 
      // Replace the below line to create a tree 
      // as represented in the diagram above
-     Node<Integer> smallTree = null;
+     Node<Integer> smallTree = new Node<>(99, 
+                                  new Node<Integer>(45, 
+                                      new Node<Integer>(9, null, null), 
+                                      new Node<Integer>(5, null, null)), 
+                                  new Node<Integer>(82, 
+                                      null, 
+                                      new Node<Integer>(16, null, null)));
+System.out.println(" ");
+System.out.println(maxVal(smallTree));
+System.out.println(treeSum(smallTree));
+System.out.println(numLevels(smallTree));
+
 
 
     /*
